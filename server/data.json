@@ -1,0 +1,9 @@
+[
+  {"name": "Iron Sword", "weight": 5, "value": 10},
+  {"name": "Healing Potion", "weight": 1, "value": 8},
+  {"name": "Gold Coin", "weight": 1, "value": 4},
+  {"name": "Leather Armor", "weight": 7, "value": 14},
+  {"name": "Magic Staff", "weight": 4, "value": 18},
+  {"name": "Torch", "weight": 2, "value": 2},
+  {"name": "Diamond", "weight": 1, "value": 50}
+]
