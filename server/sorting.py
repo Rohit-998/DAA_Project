@@ -1,18 +1,6 @@
-# backend/sorting.py
+
 from typing import List, Dict
 
-def quick_sort(items: List[Dict], key: str = "value") -> List[Dict]:
-    """
-    Quick sort (simple recursive) by key (assumes numeric key).
-    """
-    if len(items) <= 1:
-        return items[:]
-    pivot = items[len(items)//2]
-    pivot_val = float(pivot.get(key, 0))
-    left = [x for x in items if float(x.get(key, 0)) < pivot_val]
-    mid = [x for x in items if float(x.get(key, 0)) == pivot_val]
-    right = [x for x in items if float(x.get(key, 0)) > pivot_val]
-    return quick_sort(left, key) + mid + quick_sort(right, key)
 
 def merge_sort(items: List[Dict], key: str = "value") -> List[Dict]:
     if len(items) <= 1:

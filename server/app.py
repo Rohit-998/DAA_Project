@@ -2,7 +2,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from knapsack import knapsack_optimize
-from sorting import quick_sort, merge_sort
+from sorting import merge_sort
 from search import linear_search
 import json
 import os
@@ -22,7 +22,6 @@ def get_items():
 def optimize_knapsack():
     payload = request.json or {}
     capacity = int(payload.get("capacity", 10))
-  
     items = payload.get("items", ITEMS)
     result = knapsack_optimize(items, capacity)
     return jsonify(result)
@@ -31,12 +30,9 @@ def optimize_knapsack():
 def sort_items():
     payload = request.json or {}
     key = payload.get("key", "value")
-    method = payload.get("method", "quick")
     items = payload.get("items", ITEMS)
-    if method == "merge":
-        sorted_items = merge_sort(items, key)
-    else:
-        sorted_items = quick_sort(items, key)
+
+    sorted_items = merge_sort(items, key)
     return jsonify(sorted_items)
 
 @app.route("/api/search", methods=["POST"])

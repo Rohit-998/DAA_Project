@@ -1,15 +1,10 @@
-# backend/knapsack.py
+
 from typing import List, Dict, Tuple
 
 def knapsack_optimize(items: List[Dict], capacity: int) -> Dict:
-    """
-    0/1 Knapsack dynamic programming implementation.
-    items: list of {'name': str, 'weight': int, 'value': int}
-    capacity: int
-    returns: {'total_value': int, 'total_weight': int, 'items': [...]}
-    """
+
     n = len(items)
-    # dp table (n+1) x (capacity+1)
+  
     dp = [[0] * (capacity + 1) for _ in range(n + 1)]
     for i in range(1, n + 1):
         wt = int(items[i-1]['weight'])
@@ -20,7 +15,7 @@ def knapsack_optimize(items: List[Dict], capacity: int) -> Dict:
             else:
                 dp[i][w] = dp[i-1][w]
 
-    # find selected items
+
     w = capacity
     selected = []
     for i in range(n, 0, -1):
