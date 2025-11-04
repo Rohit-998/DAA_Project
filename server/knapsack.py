@@ -1,33 +1,42 @@
-
-from typing import List, Dict, Tuple
+from typing import List, Dict
 
 def knapsack_optimize(items: List[Dict], capacity: int) -> Dict:
+    # Sort items by value-to-weight ratio (descending)
+    items = sorted(items, key=lambda x: int(x['value']) / int(x['weight']), reverse=True)
 
-    n = len(items)
-  
-    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
-    for i in range(1, n + 1):
-        wt = int(items[i-1]['weight'])
-        val = int(items[i-1]['value'])
-        for w in range(capacity + 1):
-            if wt <= w:
-                dp[i][w] = max(dp[i-1][w], dp[i-1][w-wt] + val)
-            else:
-                dp[i][w] = dp[i-1][w]
-
-
-    w = capacity
+    total_value = 0
+    total_weight = 0
     selected = []
-    for i in range(n, 0, -1):
-        if dp[i][w] != dp[i-1][w]:
-            selected.append(items[i-1])
-            w -= int(items[i-1]['weight'])
 
-    selected.reverse()
-    total_value = dp[n][capacity]
-    total_weight = sum(int(it['weight']) for it in selected)
+    for item in items:
+        weight = int(item['weight'])
+        value = int(item['value'])
+
+        if total_weight + weight <= capacity:
+        
+            selected.append(item)
+            total_value += value
+            total_weight += weight
+        else:
+           
+            remain = capacity - total_weight
+            if remain <= 0:
+                break
+            fraction = remain / weight
+            fractional_value = value * fraction
+            fractional_item = {
+                'name': item.get('name', 'unknown'),
+                'weight': remain,
+                'value': fractional_value,
+                'fraction_taken': round(fraction, 2)
+            }
+            selected.append(fractional_item)
+            total_value += fractional_value
+            total_weight += remain
+            break  
+
     return {
-        'total_value': int(total_value),
-        'total_weight': int(total_weight),
+        'total_value': round(total_value, 2),
+        'total_weight': round(total_weight, 2),
         'items': selected
     }
